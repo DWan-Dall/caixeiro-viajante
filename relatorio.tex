@@ -1,0 +1,284 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+
+\hypertarget{relatuxf3rio-anuxe1lise-do-problema-do-caixeiro-viajante-com-foruxe7a-bruta-e-heuruxedstica}{%
+\section{Relatório: Análise do Problema do Caixeiro Viajante com Força
+Bruta e
+Heurística}\label{relatuxf3rio-anuxe1lise-do-problema-do-caixeiro-viajante-com-foruxe7a-bruta-e-heuruxedstica}}
+
+\hypertarget{introduuxe7uxe3o}{%
+\subsection{1. Introdução}\label{introduuxe7uxe3o}}
+
+O Problema do Caixeiro Viajante (Traveling Salesman Problem - TSP)
+consiste em encontrar o caminho mais curto que permite visitar um
+conjunto de cidades exatamente uma vez e retornar à cidade de origem.
+
+\hypertarget{algoritmos-utilizados}{%
+\subsection{2. Algoritmos Utilizados}\label{algoritmos-utilizados}}
+
+Neste trabalho, foram implementadas duas abordagens para resolver o TSP:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Força Bruta:} testa todos os caminhos possíveis para encontrar
+  a melhor opção.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Gera todas as possíveis permutações das cidades;
+  \item
+    Calcula a distância total de cada caminho;
+  \end{itemize}
+\item
+  \textbf{Heurística Escolhida: Vizinho Mais Próximo} - pois aproxima
+  uma solução em tempo muito mais rápido.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Começa em uma cidade;
+  \item
+    Sempre escolhe a cidade mais próxima não visitada;
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{metodologia}{%
+\subsection{3. Metodologia}\label{metodologia}}
+
+Foram geradas coordenadas aleatórias (x, y) para representar cidades,
+utilizando amostras de 5 a 8 cidades.
+
+\begin{itemize}
+\tightlist
+\item
+  Número de cidades variando de 5 a 8.
+\item
+  Coordenadas geradas aleatoriamente no intervalo {[}0, 100{]}.
+\item
+  Medição dos tempos de execução e distâncias totais percorridas.
+\item
+  Gráficos gerados para comparar desempenhos.
+\end{itemize}
+
+\hypertarget{ambiente-de-desenvolvimento}{%
+\subsection{3.1 Ambiente de
+Desenvolvimento}\label{ambiente-de-desenvolvimento}}
+
+\begin{itemize}
+\tightlist
+\item
+  Linguagem: R
+\item
+  Pacotes:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    dplyr → manipulação de dados;
+  \item
+    ggplot2 → criação de gráficos;
+  \item
+    combinat → gerar todas as permutações (para a força bruta);
+  \end{itemize}
+\item
+  Relatório gerado em RMarkdown.
+\end{itemize}
+
+\hypertarget{resultados-obtidos}{%
+\subsection{4. Resultados Obtidos:}\label{resultados-obtidos}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule
+\begin{minipage}[b]{\linewidth}\raggedright
+Cidades
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Distância Bruta
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Tempo Bruta (segundos)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Distância Heurística
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Tempo Heurística
+\end{minipage} \\
+\midrule
+\endhead
+5 & 196 & 0.027 & 200 & 0.0005 \\
+6 & 209 & 0.144 & 237 & 0.0006 \\
+7 & 229 & 1.17 & 239 & 0.0008 \\
+8 & 233 & 10.5 & 244 & 0.001 \\
+\bottomrule
+\end{longtable}
+
+\begin{itemize}
+\tightlist
+\item
+  Gráfico de Comparativo de Distâncias e Comparação de tempo (com escala
+  logarítmica), salvo em
+  resultados/grafico-resultado-outras-cidades.png.
+\end{itemize}
+
+\hypertarget{anuxe1lise-de-complexidade}{%
+\subsection{5. Análise de
+Complexidade}\label{anuxe1lise-de-complexidade}}
+
+\begin{itemize}
+\tightlist
+\item
+  O gráfico logarítmico mostra que a força bruta cresce muito mais
+  rapidamente que a heurística.
+\item
+  Confirma o comportamento esperado de O(n!) versus O(n²).
+\end{itemize}
+
+\hypertarget{foruxe7a-bruta}{%
+\subsection{5.1 Força Bruta}\label{foruxe7a-bruta}}
+
+\begin{itemize}
+\tightlist
+\item
+  Complexidade: O(n!)
+\item
+  Explicação: Para n cidades, existem n! permutações possíveis de
+  caminhos.
+\end{itemize}
+
+\textbf{Observação:} Muito ineficiente para número elevado de cidades; o
+tempo cresce exponencialmente.
+
+\hypertarget{heuruxedstica-do-vizinho-mais-pruxf3ximo}{%
+\subsection{5.2 Heurística do Vizinho Mais
+Próximo}\label{heuruxedstica-do-vizinho-mais-pruxf3ximo}}
+
+\begin{itemize}
+\tightlist
+\item
+  Complexidade: O(n\^{}2)
+\item
+  Explicação: Para cada cidade, busca-se a cidade mais próxima entre as
+  restantes.
+\end{itemize}
+
+\textbf{Observação:} Rápido e eficiente para tamanhos moderados de
+instâncias, mas não garante solução ótima.
+
+\hypertarget{conclusuxe3o}{%
+\subsection{6. Conclusão}\label{conclusuxe3o}}
+
+A abordagem de força bruta garante encontrar a rota ótima, mas é
+inviável para quantidades maiores de cidades devido ao crescimento
+exponencial do tempo de execução. A heurística do vizinho mais próximo
+provém soluções aproximadas muito mais rápidas, sendo adequada para
+problemas de tamanho médio ou quando é necessário sacrificar um pouco de
+qualidade pela rapidez.
+
+O estudo demonstra claramente a diferença prática entre a busca
+exaustiva e heurísticas em problemas combinatórios.
+
+A solução por força bruta, embora ótima, torna-se inviável para números
+maiores de cidades devido à sua complexidade fatorial. A heurística do
+vizinho mais próximo oferece soluções rápidas, ainda que não
+necessariamente ótimas, sendo prática para aplicações reais.
+
+\hypertarget{anexos}{%
+\subsection{7. Anexos}\label{anexos}}
+
+Script R: caixeiro\_viajante.Rmd
+
+Gráficos: - Comparação de distâncias:
+resultados/grafico-resultado-outras-cidades.png - Comparação de tempos:
+resultados/grafico-tempo.png
+
+Arquivos CSV - resultados/resultados\_cidades.csv
+
+\hypertarget{autoria}{%
+\subsubsection{✍️ Autoria}\label{autoria}}
+
+Projeto desenvolvido para o Mestrado Profissional em Computação Aplicada
+- UNIVALI Matéria: ANÁLISE DE ALGORITMOS Professor: - Rudimar Luiz
+Scaranto Dazzi
+
+\href{https://github.com/DWan-Dall}{@DWan-Dall}💜.
+
+\end{document}

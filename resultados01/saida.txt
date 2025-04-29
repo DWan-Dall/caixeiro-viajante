@@ -1,35 +1,10 @@
----
-title: "Caixeiro Viajante"
-output:
-  html_document: default
-  pdf_document: default
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-## 1. Instalar pacotes se necessario
-#  install.packages(c("dplyr", "ggplot2", "combinat"))
-
-# install.packages("rmarkdown", "knitr")
-# Rodar no bash para gerar o arquivo html/pdf
-# Rscript -e "rmarkdown::render('caixeiro_viajante.Rmd')"
-# Rscript -e "rmarkdown::render('caixeiro_viajante.Rmd', output_format = 'pdf_document')"
-# Rscript -e "rmarkdown::render('relatorio.Rmd', output_format = 'pdf_document')"
-
-
-library(dplyr)
+> library(dplyr)
 library(ggplot2)
 library(combinat)
-
-# Criar pasta 'resultados' para salvar saídas, se não existir
-if (!dir.exists("resultados")) {
+> if (!dir.exists("resultados")) {
   dir.create("resultados")
 }
-
-## 2. Gerar coordenadas aleatórias para cidades
-gerar_cidades <- function(n) {
+> gerar_cidades <- function(n) {
   set.seed(42)
   tibble(
     cidade = paste0("C", 1:n),
@@ -37,16 +12,19 @@ gerar_cidades <- function(n) {
     y = runif(n, 0, 100)
   )
 }
-
-print(gerar_cidades)
-
-## 3. Calcular distância entre duas cidades
-distancia <- function(c1, c2) {
+> print(gerar_cidades)
+function(n) {
+  set.seed(42)
+  tibble(
+    cidade = paste0("C", 1:n),
+    x = runif(n, 0, 100),
+    y = runif(n, 0, 100)
+  )
+}
+> distancia <- function(c1, c2) {
   sqrt((c1$x - c2$x)^2 + (c1$y - c2$y)^2)
 }
-
-## 4. Calcular distância total de um caminho
-calcular_distancia_total <- function(caminho, cidades) {
+> calcular_distancia_total <- function(caminho, cidades) {
   total <- 0
   for (i in 1:(length(caminho)-1)) {
     total <- total + distancia(cidades[caminho[i], ], cidades[caminho[i+1], ])
@@ -54,9 +32,7 @@ calcular_distancia_total <- function(caminho, cidades) {
   total <- total + distancia(cidades[caminho[length(caminho)], ], cidades[caminho[1], ])
   return(total)
 }
-
-## 5. Aplica a força bruta
-forca_bruta <- function(cidades) {
+> forca_bruta <- function(cidades) {
   inicio <- Sys.time()
   perms <- permn(1:nrow(cidades))
   melhor_dist <- Inf
@@ -72,9 +48,7 @@ forca_bruta <- function(cidades) {
   tempo <- Sys.time() - inicio
   return(list(caminho = melhor_caminho, distancia = melhor_dist, tempo = as.numeric(tempo, units = "secs")))
 }
-
-## 6. Aplica heurística do vizinho mais próximo
-heuristica_vizinho <- function(cidades) {
+> heuristica_vizinho <- function(cidades) {
   inicio <- Sys.time()
   restantes <- 2:nrow(cidades)
   atual <- 1
@@ -90,9 +64,7 @@ heuristica_vizinho <- function(cidades) {
   tempo <- Sys.time() - inicio
   return(list(caminho = caminho, distancia = calcular_distancia_total(caminho, cidades), tempo = as.numeric(tempo, units = "secs")))
 }
-
-## 7. Faz testes para vários tamanhos de cidades
-resultados <- tibble()
+> resultados <- tibble()
 
 for (n in 5:8) {
   cidades <- gerar_cidades(n)
@@ -107,38 +79,46 @@ for (n in 5:8) {
     Tempo_Heuristica = round(res_heuristica$tempo,4)
   ))
 }
-
-print(resultados)
-
-## 8. Gera Plot
-grafico_resultado <- ggplot(resultados, aes(x = Cidades)) +
+> print(resultados)
+# A tibble: 4 × 5
+  Cidades Distancia_Bruta Tempo_Bruta Distancia_Heuristica Tempo_Heuristica
+    <int>           <dbl>       <dbl>                <dbl>            <dbl>
+1       5            196.      0.0247                 200.           0.0005
+2       6            209.      0.172                  237.           0.0006
+3       7            229.      1.12                   239.           0.0022
+4       8            233.     10.2                    244.           0.001 
+> grafico-resultado <- ggplot(resultados, aes(x = Cidades)) +
   geom_line(aes(y = Distancia_Bruta, color = "Bruta")) +
   geom_line(aes(y = Distancia_Heuristica, color = "Heuristica")) +
   labs(title = "Comparacao de Distancia", y = "Distancia Total", x = "Numero de Cidades") +
   theme_minimal()
-
-# Mostrar o gráfico
+Error in grafico - resultado <- ggplot(resultados, aes(x = Cidades)) +  : 
+  não foi possível encontrar a função "-<-"
+> # Mostrar o gráfico
+print(grafico-resultado)
+Erro: objeto 'resultado' não encontrado
+> # Salvar o gráfico
+ggsave("resultados/grafico-resultado-outras-cidades.png", plot = grafico-resultado, width = 8, height = 6, dpi = 300)
+Erro: objeto 'resultado' não encontrado
+> grafico_resultado <- ggplot(resultados, aes(x = Cidades)) +
+  geom_line(aes(y = Distancia_Bruta, color = "Bruta")) +
+  geom_line(aes(y = Distancia_Heuristica, color = "Heuristica")) +
+  labs(title = "Comparacao de Distancia", y = "Distancia Total", x = "Numero de Cidades") +
+  theme_minimal()
+> # Mostrar o gráfico
+print(grafico_resultado-resultado)
+Erro: objeto 'resultado' não encontrado
+> # Mostrar o gráfico
 print(grafico_resultado)
-
-# Salvar o gráfico
+> # Salvar o gráfico
 ggsave("resultados/grafico-resultado-outras-cidades.png", plot = grafico_resultado, width = 8, height = 6, dpi = 300)
-
-
-## 9. Analisando crescimento (Big-O experimental)
-
-# Gráfico de tempo de execução
-grafico_tempo <- ggplot(resultados, aes(x = Cidades)) +
+> grafico_tempo <- ggplot(resultados, aes(x = Cidades)) +
   geom_line(aes(y = Tempo_Bruta, color = "Bruta")) +
   geom_line(aes(y = Tempo_Heuristica, color = "Heuristica")) +
   # scale_y_log10() +
   labs(title = "Tempo de Execucao - Forca Bruta vs Heuristica", 
        y = "Tempo (segundos)", x = "No de Cidades") +
   theme_minimal()
-
-print(grafico_tempo)
-
-# Salvar o gráfico também
+> print(grafico_tempo)
+> # Salvar o gráfico também
 ggsave("resultados/grafico-tempo.png", plot = grafico_tempo, width = 8, height = 6, dpi = 300)
-
-write.csv(resultados, "resultados/resultados_cidades.csv", row.names = FALSE)
-

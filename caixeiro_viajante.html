@@ -367,6 +367,12 @@ pre code {
 </div>
 <div id="install.packagesrmarkdown-knitr" class="section level1">
 <h1>install.packages(“rmarkdown”, “knitr”)</h1>
+</div>
+<div id="rodar-no-bash-para-gerar-o-arquivo-html" class="section level1">
+<h1>Rodar no bash para gerar o arquivo html</h1>
+</div>
+<div id="rscript--e-rmarkdownrendercaixeiro_viajante.rmd" class="section level1">
+<h1>Rscript -e “rmarkdown::render(‘caixeiro_viajante.Rmd’)”</h1>
 <p>library(dplyr) library(ggplot2) library(combinat)</p>
 </div>
 <div id="criar-pasta-resultados-para-salvar-saídas-se-não-existir" class="section level1">
@@ -429,7 +435,7 @@ round(res_heuristica\)</span>tempo,4) )) }</p>
 </div>
 <div id="gera-plot" class="section level2">
 <h2>8. Gera Plot</h2>
-<p>grafico-resultado &lt;- ggplot(resultados, aes(x = Cidades)) +
+<p>grafico_resultado &lt;- ggplot(resultados, aes(x = Cidades)) +
 geom_line(aes(y = Distancia_Bruta, color = “Bruta”)) + geom_line(aes(y =
 Distancia_Heuristica, color = “Heuristica”)) + labs(title = “Comparacao
 de Distancia”, y = “Distancia Total”, x = “Numero de Cidades”) +
@@ -438,12 +444,12 @@ theme_minimal()</p>
 </div>
 <div id="mostrar-o-gráfico" class="section level1">
 <h1>Mostrar o gráfico</h1>
-<p>print(grafico-resultado)</p>
+<p>print(grafico_resultado)</p>
 </div>
 <div id="salvar-o-gráfico" class="section level1">
 <h1>Salvar o gráfico</h1>
 <p>ggsave(“resultados/grafico-resultado-outras-cidades.png”, plot =
-grafico-resultado, width = 8, height = 6, dpi = 300)</p>
+grafico_resultado, width = 8, height = 6, dpi = 300)</p>
 <div id="analisando-crescimento-big-o-experimental" class="section level2">
 <h2>9. Analisando crescimento (Big-O experimental)</h2>
 </div>
@@ -461,6 +467,8 @@ labs(title = “Tempo de Execucao - Forca Bruta vs Heuristica”, y = “Tempo
 <h1>Salvar o gráfico também</h1>
 <p>ggsave(“resultados/grafico-tempo.png”, plot = grafico_tempo, width =
 8, height = 6, dpi = 300)</p>
+<p>write.csv(resultados, “resultados/resultados_cidades.csv”, row.names
+= FALSE)</p>
 </div>
 
 
