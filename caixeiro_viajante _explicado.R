@@ -56,7 +56,7 @@ calcular_distancia_total <- function(caminho, cidades) {
 ## 5. Aplica a força bruta
 forca_bruta <- function(cidades) {
   inicio <- Sys.time() # Inicia a medição de tempo de execução
-  perms <- permn(1:nrow(cidades)) # Gera os caminhos/permutações possíveis das cidades
+  perms <- permn(1:nrow(cidades)) # Gera os caminhos/permutações possíveis das cidades - uso da complexidade O(n!)
   melhor_dist <- Inf # melhor distência
   melhor_caminho <- NULL # Inicializa o melhor caminho como NULL pois ainda não temos um caminho encontrado
 
@@ -79,7 +79,7 @@ heuristica_vizinho <- function(cidades) {
   caminho <- c(atual) # Pega a cidade atual
 
   while (length(restantes) > 0) { # Enquanto ainda houver cidades não visitadas
-    proximo <- restantes[which.min(sapply(restantes, function(i) distancia(cidades[atual, ], cidades[i, ])))] # Faz a contagem da próxima
+    proximo <- restantes[which.min(sapply(restantes, function(i) distancia(cidades[atual, ], cidades[i, ])))] # Faz a contagem da próxima - uso da complexidade O(n^²)
     caminho <- c(caminho, proximo) # Adiciona na listade do camhinho percorrido
     restantes <- setdiff(restantes, proximo) #  Remove a cidade escolhida da lista de restantes
     atual <- proximo # Atualiza a cidade atual
