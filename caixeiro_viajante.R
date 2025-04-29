@@ -130,7 +130,7 @@ ggsave("resultados/grafico-resultado-outras-cidades.png", plot = grafico_resulta
 grafico_tempo <- ggplot(resultados, aes(x = Cidades)) +
   geom_line(aes(y = Tempo_Bruta, color = "Bruta")) +
   geom_line(aes(y = Tempo_Heuristica, color = "Heuristica")) +
-  # scale_y_log10() +
+  scale_y_log10() +
   labs(title = "Tempo de Execucao - Forca Bruta vs Heuristica", 
        y = "Tempo (segundos)", x = "No de Cidades") +
   theme_minimal()
